@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "applied_ats",
+  "info": {
+    "singularName": "applied-at",
+    "pluralName": "applied-ats",
+    "displayName": "AppliedAt"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "applied_at"
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "applied_at"
+    }
+  }
+}

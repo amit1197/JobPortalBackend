@@ -32,6 +32,12 @@
       "relation": "manyToMany",
       "target": "api::category.category",
       "inversedBy": "reviews"
+    },
+    "applied_at": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::applied-at.applied-at",
+      "inversedBy": "reviews"
     }
   }
 }

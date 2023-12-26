@@ -362,6 +362,45 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAppliedAtAppliedAt extends Schema.CollectionType {
+  collectionName: 'applied_ats';
+  info: {
+    singularName: 'applied-at';
+    pluralName: 'applied-ats';
+    displayName: 'AppliedAt';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    users_permissions_user: Attribute.Relation<
+      'api::applied-at.applied-at',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    reviews: Attribute.Relation<
+      'api::applied-at.applied-at',
+      'oneToMany',
+      'api::review.review'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::applied-at.applied-at',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::applied-at.applied-at',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCategoryCategory extends Schema.CollectionType {
   collectionName: 'categories';
   info: {
@@ -422,6 +461,11 @@ export interface ApiReviewReview extends Schema.CollectionType {
       'api::review.review',
       'manyToMany',
       'api::category.category'
+    >;
+    applied_at: Attribute.Relation<
+      'api::review.review',
+      'manyToOne',
+      'api::applied-at.applied-at'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -830,6 +874,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    applied_at: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToOne',
+      'api::applied-at.applied-at'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -857,6 +906,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::applied-at.applied-at': ApiAppliedAtAppliedAt;
       'api::category.category': ApiCategoryCategory;
       'api::review.review': ApiReviewReview;
       'plugin::upload.file': PluginUploadFile;
